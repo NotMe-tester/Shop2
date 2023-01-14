@@ -23,23 +23,61 @@ export class CartComponent implements OnInit {
   ngOnInit(): any {
 
     this.msg.getMsg().subscribe((product: any) => {
+      this.addProductToCart(product)
 
-      for(let i in this.cartItems) {
-        this.cartItems[i].id ===product.id
-      }
-
-      this.cartItems.push({
-        productName: product.name,
-        qty: 1,
-        price: product.price
-      })
-
-      this.cartTotal = 0
-      this.cartItems.forEach((item: { qty: number; price: number; }) => {
-        this.cartTotal += (item.qty * item.price)
-      })
     })
 
   }
+addProductToCart(product: Product){
+
+  let productExists = false
+
+  for(let i in this.cartItems){
+            if(this.cartItems[i].productId === product.id){
+             this.cartItems[i].qty ++
+             productExists = true
+             break;
+            }
+          }
+            if (!productExists) {
+              this.cartItems.push({
+                productId: product.id,
+                productName: product.name,
+                qty: 1,
+                price: product.price
+              })
+            }
+
+//    if(this.cartItems.length === 0) {
+//     this.cartItems.push({
+//        productId: product.id,
+//        productName: product.name,
+//        qty: 1,
+//        price: product.price
+//      })
+//    } else {
+//      for(let i in this.cartItems){
+//        if(this.cartItems[i].productId === product.id){
+//          this.cartItems[i].qty ++
+//        
+//       } else {
+//          this.cartItems.push({
+//            productId: product.id,
+//            productName: product.name,
+//            qty: 1,
+//            price: product.price
+//          })
+//        }
+
+    }
+
+
 
 }
+ // this.cartTotal = 0
+//  this.cartItems.forEach((item: { qty: number; price: number; }) => {
+ //   this.cartTotal += (item.qty * item.price)
+ // })
+
+
+
